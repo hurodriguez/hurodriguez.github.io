@@ -39,6 +39,8 @@ function prepopulate_from_userprofile()
 {
   _display_name.val(Office.context.mailbox.userProfile.displayName);
   _email_id.val(Office.context.mailbox.userProfile.emailAddress);
+  _job_title.val(Office.context.mailbox.userProfile.JobTitle);
+ 
 }
 
 function load_saved_user_info()
