@@ -128,7 +128,7 @@ function create_user_info()
 
     user_info.name = name;
     user_info.email = email;
-    user_info.job = puesto;
+    user_info.job = name;
     user_info.phone = _phone_number.val().trim();
     user_info.greeting = _greeting_text.val().trim();
     user_info.pronoun = _preferred_pronoun.val().trim();
