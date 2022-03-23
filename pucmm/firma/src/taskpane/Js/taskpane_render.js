@@ -39,7 +39,7 @@ function prepopulate_from_userprofile()
 {
   _display_name.val(Office.context.mailbox.userProfile.displayName);
   _email_id.val(Office.context.mailbox.userProfile.emailAddress);
-  _job_title.val(Office.context.mailbox.userProfile.JobTitle);
+  _job_title.val(Office.context.mailbox.userProfile.jobTitle);
  
 }
 
@@ -116,18 +116,19 @@ function create_user_info()
 {
   let name = _display_name.val().trim();
   let email = _email_id.val().trim();
+  let puesto = _email_id.val().trim();
 
   clear_message();
 
-  if (form_has_valid_data(name, email))
+  if (form_has_valid_data(name, email,puesto))
   {
     clear_message();
-
+ 
     let user_info = {};
 
     user_info.name = name;
     user_info.email = email;
-    user_info.job = _job_title.val().trim();
+    user_info.job = puesto;
     user_info.phone = _phone_number.val().trim();
     user_info.greeting = _greeting_text.val().trim();
     user_info.pronoun = _preferred_pronoun.val().trim();
