@@ -40,7 +40,7 @@ function prepopulate_from_userprofile()
   _display_name.val(Office.context.mailbox.userProfile.displayName);
   _email_id.val(Office.context.mailbox.userProfile.emailAddress);
   //_job_title.val(Office.context.mailbox.userProfile.displayName);
-  _job_title.val(Office.MailboxEnums.EntityType.PhoneNumber)
+  _job_title.val(Office.context.MailboxEnums.EntityType.PhoneNumber);
  
 }
 
