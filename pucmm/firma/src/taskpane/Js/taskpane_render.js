@@ -106,7 +106,7 @@ function form_has_valid_data(name, email)
 
   return true;
 }
-
+ 
 function navigate_to_taskpane_assignsignature()
 {
   window.location.href = 'assignsignature.html';
