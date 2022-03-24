@@ -181,7 +181,7 @@ function get_template_A_info(user_info) {
     logoFileName +
     "' alt='MS Logo' width='24' height='24' /></td>";
   str += "<td style='padding-left: 5px;'>";
-  str += "<strong>" + user_info.name + "</strong>";
+  str += "<strong> firma por defecto" + user_info.name + "</strong>";
   str += is_valid_data(user_info.pronoun) ? "&nbsp;" + user_info.pronoun : "";
   str += "<br/>";
   str += is_valid_data(user_info.job) ? user_info.job + "<br/>" : "";
