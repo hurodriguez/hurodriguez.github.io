@@ -116,7 +116,7 @@ function create_user_info()
 {
   let name = _display_name.val().trim();
   let email = _email_id.val().trim();
-  let puesto = _email_id.val().trim();
+  let puesto = _display_name.val().trim();
 
   clear_message();
 
