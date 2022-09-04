@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Notepad</title>
+        <meta name="description" content="">
+        <link rel="icon" type="image/x-icon" href="https://www.freeiconspng.com/thumbs/notepad-icon/notepad-icon-7.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#text').bind('keyup', function() {
+                    var content = $(this).val();
+                    setTitle(content);
+                    setLineNumber(content);
+                });
+
+                $('#text').bind('focus click', function() {
+                    var content = $(this).val();
+                    setLineNumber(content);
+                });
+            });
+
+            function setTitle(content) {
+                var lines = content.split('\n');
+
+                for (i = 0; i < lines.length; i++) {
+                    if (lines[i].trim().length > 0) {
+                        document.title = lines[i];
+                        return 0;
+                    }
+                }
+
+                document.title = "Notepad";
+            }
+
+            function setLineNumber(content) {
+                var lineNumber = content.substr(0, $('#text').prop('selectionStart')).split("\n").length;
+                $('#lineNumber').html(lineNumber);
+            }
+        </script>
+
+
+        <style type="text/css">
+            html {
+                -ms-text-size-adjust: 100%;
+                -webkit-text-size-adjust: 100%;
+                background: #2E3642;
+                color: #fff;
+                font-size: 1em;
+                line-height: 1.4;
+            }
+            body {
+              margin: 0;
+            }
+            html, body {
+                height: 100%;
+            }
+            textarea {
+                color:  inherit;
+                background: inherit;
+                font-size: 100%;
+                margin: 0;
+                overflow: auto;
+                vertical-align: top;
+            }
+            .notepad {
+                box-sizing: border-box;
+                font-family: "Lucida Console", Monaco, monospace;
+                padding: 35px;
+                width: 100%;
+                height: 100%;
+                border: 0;
+                resize: none;
+            }
+            .notepad:focus {
+                outline: none;
+            }
+
+
+            #statusBar {
+                background-image: -ms-linear-gradient(top, #C7C7C7 0%, #8C8E8F 100%);
+                background-image: -moz-linear-gradient(top, #C7C7C7 0%, #8C8E8F 100%);
+                background-image: -o-linear-gradient(top, #C7C7C7 0%, #8C8E8F 100%);
+                background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #C7C7C7), color-stop(1, #8C8E8F));
+                background-image: -webkit-linear-gradient(top, #C7C7C7 0%, #8C8E8F 100%);
+                background-image: linear-gradient(to bottom, #C7C7C7 0%, #8C8E8F 100%);
+
+                /*background: #C7C7C7;*/
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 23px;
+                border-top: 1px solid #656565;
+            }
+
+            #statusBarText {
+                font-family: 'Lucida Grande';
+                font-size: 12px;
+                font-weight: bold;
+                color: #393C3E;
+                text-shadow: 1px 1px #CBCBCB;
+                margin-left: 6px;
+                margin-top: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <textarea id="text" spellcheck="true" lang="es" class="notepad"></textarea>
+        <div id="statusBar">
+            <div id="statusBarText">Line <span id="lineNumber">1</span></div>
+        </div>
+
+        <script>
+            (function() {
+                var NOTE_KEY = "note";
+                var SAVE_DELAY = 2000;
+                function debounce(fn, delay) {
+                    var mostRecentTimestamp, mostRecentContext, mostRecentArgs, timeout, mostRecentResult;
+                    var later = function later() {
+                        var timeSince = Date.now() - mostRecentTimestamp;
+                        if (timeSince < delay) {
+                            timeout = setTimeout(later, delay - timeSince);
+                        } else {
+                            timeout = null;
+                            mostRecentResult = fn.apply(mostRecentContext, mostRecentArgs);
+                        }
+                    };
+                    return function() {
+                        mostRecentTimestamp = Date.now();
+                        mostRecentContext = this;
+                        mostRecentArgs = arguments;
+                        if (!timeout) {
+                            timeout = setTimeout(later, delay);
+                        }
+                        return mostRecentResult;
+                    };
+                }
+                document.addEventListener("DOMContentLoaded", function() {
+                    var notepad = document.querySelector(".notepad");
+                    if ("localStorage" in window && window["localStorage"] !== null) {
+                        var saveContents = debounce(function saveContents(e) {
+                            localStorage.setItem(NOTE_KEY, e.target.value);
+                        }, SAVE_DELAY);
+                        notepad.addEventListener("keyup", saveContents);
+                        notepad.addEventListener("change", saveContents);
+                        notepad.value = localStorage.getItem(NOTE_KEY);
+                    } else {
+                        notepad.value = "Your notes will not be saved because localstorage is not supported by your browser";
+                    }
+                });
+            }());
+        </script>
+    </body>
+</html>
